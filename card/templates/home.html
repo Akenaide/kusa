@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'card/style.css' %}" />
+<table id="home">
+    <tr>
+        <td>ID</td>
+        {% for date in dates %}
+        <td> {{date|date}} </td>
+        {% endfor %}
+    </tr>
+    {% for col, col2 in cols %}
+    {% if col.value == col2.value %}
+    <tr class="hide">
+        {% else %}
+        <tr>
+            {% endif %}
+            <td><a href={{col.card.yyt}}>{{col.card}}</a></td>
+            <td>{{col.value}}</td>
+            <td>{{col2.value}}</td>
+        </tr>
+        {% endfor %}
+</table>
