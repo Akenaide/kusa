@@ -10,21 +10,16 @@ from card import models
 def home(request):
     d1 = arrow.get("2018-04-01")
     d2 = arrow.get("2018-04-05")
-    cols = []
+    p = defaultdict(list)
 
-    for card in models.Card.objects.all()[:500]:
-        try:
-            price1 = card.price_set.get(timestamp=d1.datetime)
-            price2 = card.price_set.get(timestamp=d2.datetime)
-            if price1.value == price2.value:
-                continue
-        except models.Price.DoesNotExist:
-            pass
-        else:
-            cols.append((price1, price2,))
 
+    for prices in models.Price.objects.filter(timestamp__in=[d1.datetime, d2.datetime]).select_related("card").order_by("timestamp"):
+        p[prices.card.card_id].append(prices)
+
+    cols =  [v for k, v in p.items() if len(v) > 1]
     context = {
             "cols": cols,
             "dates": [d1, d2,],
             }
-    return render(request, "home.html", context=context)
+    r = render(request, "home.html", context=context)
+    return r
