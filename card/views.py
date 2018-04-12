@@ -1,4 +1,5 @@
 import datetime
+from collections import defaultdict
 
 from django.shortcuts import render
 import arrow
@@ -11,10 +12,17 @@ def home(request):
     d1 = arrow.get("2018-04-01")
     d2 = arrow.get("2018-04-05")
     p = defaultdict(list)
+    cols = []
 
 
-    for prices in models.Price.objects.filter(timestamp__in=[d1.datetime, d2.datetime]).select_related("card").order_by("timestamp"):
-        p[prices.card.card_id].append(prices)
+    for price in models.Price.objects.filter(timestamp__in=[d1.datetime.isoformat(), d2.datetime.isoformat()]).select_related("card").order_by("timestamp"):
+        p[price.card.card_id].append(price)
+
+    for _, value in p.items():
+        if len(value) != 2:
+            continue
+        if value[0].value != value[1].value:
+            cols.append(value)
 
     cols =  [v for k, v in p.items() if len(v) > 1]
     context = {

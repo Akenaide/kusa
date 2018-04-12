@@ -1,3 +1,6 @@
-    .hide {
-        display: none
-    }
+.hide {
+    display: none
+}
+tr:not(.hide):nth-child(even) {
+    background-color: #f2f2f2
+}
