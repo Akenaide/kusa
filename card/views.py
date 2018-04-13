@@ -1,4 +1,3 @@
-import datetime
 from collections import defaultdict
 
 from django.shortcuts import render
@@ -16,7 +15,8 @@ def home(request):
     cols = []
 
 
-    for price in models.Price.objects.filter(timestamp__in=[d1.datetime.isoformat(), d2.datetime.isoformat()]).select_related("card").order_by("timestamp"):
+    for price in models.Price.objects.filter(timestamp__in=[d1.datetime.isoformat(),
+            d2.datetime.isoformat()]).select_related("card").order_by("timestamp"):
         p[price.card.card_id].append(price)
 
     for _, value in p.items():
