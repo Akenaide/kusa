@@ -1,5 +1,8 @@
-<body>
+
 {% load static %}
+{% load extra_filter %}
+
+<body>
 <link rel="stylesheet" type="text/css" href="{% static 'card/style.css' %}" />
 <table id="home">
     <tr>
@@ -7,12 +10,14 @@
         {% for date in dates %}
             <td> {{date|date}} </td>
         {% endfor %}
+        <td>Differrence</td>
     </tr>
     {% for col, col2 in cols %}
         <tr>
             <td><a href={{col.card.yyt}}>{{col.card}}</a></td>
             <td>{{col.value}}</td>
             <td>{{col2.value}}</td>
+            <td>{{col.value|sub:col2.value}}</td>
         </tr>
         {% endfor %}
 </table>

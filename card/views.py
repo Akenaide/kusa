@@ -5,8 +5,6 @@ import arrow
 
 from card import models
 
-# Create your views here.
-
 def home(request):
     dates = request.GET.get("dates").split(",")
     d1 = arrow.get(dates[0])
