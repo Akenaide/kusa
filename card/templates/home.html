@@ -11,14 +11,17 @@
             <td> {{date|date}} </td>
         {% endfor %}
         <td>Differrence</td>
+        <td>Image</td>
     </tr>
     {% for col, col2 in cols %}
         <tr>
-            <td><a href={{col.card.yyt}}>{{col.card}}</a></td>
+            <td><a data-img-src="{{col.card.image}}" href={{col.card.yyt}}>{{col.card}}</a></td>
             <td>{{col.value}}</td>
             <td>{{col2.value}}</td>
             <td>{{col.value|sub:col2.value}}</td>
+        <td><img class="preview"/></td>
         </tr>
         {% endfor %}
 </table>
+    <script type="text/javascript" src="{% static 'card/main.js' %}"></script>
 </body>
