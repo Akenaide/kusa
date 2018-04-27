@@ -29,3 +29,12 @@ def home(request):
             }
     r = render(request, "home.html", context=context)
     return r
+
+def detail(request, card_id):
+    card = models.Card.objects.get(card_id=card_id)
+    context = {
+            "card": card,
+            "prices": card.price_set.all().order_by("timestamp"),
+            }
+    r = render(request, "detail.html", context=context)
+    return r

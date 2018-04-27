@@ -1,0 +1,15 @@
+{{card}}
+
+<table class="table">
+    <tr>
+        <td>Date</td>
+        <td>Value</td>
+    </tr>
+{% for price in prices %}
+    <tr>
+        <td>{{price.timestamp |date}}</td>
+        <td>{{price.value}}</td>
+    </tr>
+
+{% endfor %}
+</table>
