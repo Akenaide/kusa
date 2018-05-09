@@ -6,7 +6,11 @@ import arrow
 from card import models
 
 def home(request):
-    dates = request.GET.get("dates").split(",")
+    if "dates" in request.GET:
+        dates = request.GET.get("dates").split(",")
+    else:
+        dates = list(models.Price.objects.values_list("timestamp", flat=True).distinct())[-2:]
+
     d1 = arrow.get(dates[0])
     d2 = arrow.get(dates[1])
     p = defaultdict(list)
