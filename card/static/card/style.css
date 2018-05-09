@@ -4,3 +4,8 @@
 tr:not(.hide):nth-child(even) {
     background-color: #f2f2f2
 }
+
+.grid {
+    display: grid;
+    grid-template-columns: 5fr 2fr;
+}

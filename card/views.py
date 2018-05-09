@@ -1,9 +1,13 @@
+import http
+import json
 from collections import defaultdict
 
 from django.shortcuts import render
+from django.shortcuts import redirect
 import arrow
 
 from card import models
+from card.management.commands import import_json as ijson
 
 def home(request):
     if "dates" in request.GET:
@@ -42,3 +46,15 @@ def detail(request, card_id):
             }
     r = render(request, "detail.html", context=context)
     return r
+
+def import_json(request):
+    """
+    import json
+    """
+
+    client = http.client.HTTPSConnection("proxymaker.naide.moe")
+    client.request("GET", "/static/yyt_infos-%s.json" % request.POST["date"])
+    response = client.getresponse()
+    data = json.loads(response.read().decode('utf-8'))
+    ijson.import_price(data, request.POST["date"])
+    return redirect("home")

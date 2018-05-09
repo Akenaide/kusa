@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
     path('detail/<path:card_id>/', views.detail, name="detail"),
+    path('import/', views.import_json, name="import"),
 ]

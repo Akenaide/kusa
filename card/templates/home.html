@@ -2,7 +2,7 @@
 {% load static %}
 {% load extra_filter %}
 
-<body>
+<body class="grid">
 <link rel="stylesheet" type="text/css" href="{% static 'card/style.css' %}" />
 <table id="home">
     <tr>
@@ -27,5 +27,10 @@
         </tr>
         {% endfor %}
 </table>
+<form name="import" action="/import/" method="post">
+{% csrf_token %}
+    <input type="date" name="date" />
+    <input type="submit" value="submit"/>
+    </form>
     <script type="text/javascript" src="{% static 'card/main.js' %}"></script>
 </body>
