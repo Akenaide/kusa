@@ -15,11 +15,13 @@ def home(request):
     else:
         dates = list(models.Price.objects.values_list("timestamp", flat=True).distinct())[-2:]
 
-    d1 = arrow.get(dates[0])
-    d2 = arrow.get(dates[1])
-    p = defaultdict(list)
-    cols = []
-
+    try:
+        d1 = arrow.get(dates[0])
+        d2 = arrow.get(dates[1])
+        p = defaultdict(list)
+        cols = []
+    except IndexError:
+        return render(request, "home.html", context={})
 
     for price in models.Price.objects.filter(timestamp__in=[d1.datetime.isoformat(),
             d2.datetime.isoformat()]).select_related("card").order_by("timestamp"):
