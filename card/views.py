@@ -27,7 +27,8 @@ def home(request):
             d2.datetime.isoformat()]).select_related("card").order_by("timestamp"):
         p[price.card.card_id].append(price)
 
-    for _, value in p.items():
+    for key in sorted(p.keys()):
+        value = p[key]
         if len(value) != 2:
             continue
         if value[0].value != value[1].value:
