@@ -21,8 +21,8 @@
                 <a href={% url 'detail' col.card.card_id %}>History</a>
             </td>
             <td>{{col.value}}</td>
-            <td>{{col2.value}}</td>
-            <td>{{col.value|sub:col2.value}}</td>
+            <td>{{col2}}</td>
+            <td>{{col.value|sub:col2}}</td>
         <td><img class="preview"/></td>
         </tr>
         {% endfor %}
