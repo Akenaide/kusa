@@ -16,7 +16,7 @@ def home(request):
         dates = request.GET.get("dates").split(",")
     else:
         dates = list(models.Price.objects.values_list(
-            "timestamp", flat=True).distinct())[-2:]
+            "timestamp", flat=True).order_by("timestamp").distinct())[-2:]
 
     try:
         d1 = arrow.get(dates[0])
