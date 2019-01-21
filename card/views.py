@@ -25,12 +25,17 @@ def home(request):
 
     first = models.Price.objects.filter(timestamp=d1.datetime.isoformat())
     second = models.Price.objects.filter(timestamp=d2.datetime.isoformat())
-    second = {card.card_id: card.value for card in second}
+    second = {price.card_id: price.value for price in second}
 
     for price in first:
-        second_price = second[price.card_id]
-        if price.value != second_price:
-            cols.append([price, second_price])
+        try:
+            second_price = second[price.card_id]
+        except KeyError:
+            # DB may have errors e.g cards change name
+            continue
+        else:
+            if price.value != second_price:
+                cols.append([price, second_price])
 
     context = {
         "cols": cols,
