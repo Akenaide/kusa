@@ -1,14 +1,12 @@
 import http
-import logging
 import json
-from collections import defaultdict
 
 from django.shortcuts import render
 from django.shortcuts import redirect
 import arrow
 
 from card import models
-from card.management.commands import import_json as ijson
+from card.import_prices import import_prices
 
 
 def home(request):
@@ -61,5 +59,5 @@ def import_json(request):
     client.request("GET", "/static/yyt_infos-%s.json" % request.POST["date"])
     response = client.getresponse()
     data = json.loads(response.read().decode('utf-8'))
-    ijson.import_price(data, request.POST["date"])
+    import_prices(data, request.POST["date"])
     return redirect("home")
