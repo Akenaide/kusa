@@ -16,3 +16,6 @@ class Price(models.Model):
         Card, on_delete=models.CASCADE, unique_for_date="timestamp")
     value = models.IntegerField()
     timestamp = models.DateTimeField(db_index=True)
+
+    def __str__(self):
+        return self.card_id
