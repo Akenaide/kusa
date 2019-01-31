@@ -19,3 +19,27 @@ class Price(models.Model):
 
     def __str__(self):
         return self.card_id
+
+
+def compare_prices_from_date(date1: str, date2: str) -> list:
+    """
+    Compare prices from given dates
+    """
+
+    cols = []
+
+    first = Price.objects.filter(timestamp=date1)
+    second = Price.objects.filter(timestamp=date2)
+    second = {price.card_id: price.value for price in second}
+
+    for price in first:
+        try:
+            second_price = second[price.card_id]
+        except KeyError:
+            # DB may have errors e.g cards change name
+            continue
+        else:
+            if price.value != second_price:
+                cols.append([price, second_price])
+
+    return cols

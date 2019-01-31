@@ -17,28 +17,13 @@ def home(request):
             "timestamp", flat=True).order_by("timestamp").distinct())[-2:]
 
     try:
-        d1 = arrow.get(dates[0])
-        d2 = arrow.get(dates[1])
-        cols = []
+        d1 = arrow.get(dates[0]).isoformat()
+        d2 = arrow.get(dates[1]).isoformat()
     except IndexError:
         return render(request, "home.html", context={})
 
-    first = models.Price.objects.filter(timestamp=d1.datetime.isoformat())
-    second = models.Price.objects.filter(timestamp=d2.datetime.isoformat())
-    second = {price.card_id: price.value for price in second}
-
-    for price in first:
-        try:
-            second_price = second[price.card_id]
-        except KeyError:
-            # DB may have errors e.g cards change name
-            continue
-        else:
-            if price.value != second_price:
-                cols.append([price, second_price])
-
     context = {
-        "cols": cols,
+        "cols": models.compare_prices_from_date(d1, d2),
         "dates": [d1, d2, ],
     }
     r = render(request, "home.html", context=context)

@@ -12,7 +12,6 @@ def parse_prices(data, timestamp):
     """
 
     prices = []
-    cards = []
 
     for card in models.Card.objects.all():
         try:
@@ -29,30 +28,29 @@ def parse_prices(data, timestamp):
                  data in data.items() if "to_delete" not in data}
 
     for card_id, value in new_cards.items():
-        card = models.Card(card_id=card_id,
-                           image=value["URL"],
-                           yyt=value["CardURL"],
-                           rarity=value["Rarity"],
-                           )
-        cards.append(card)
+        card = models.Card.objects.create(card_id=card_id,
+                                          image=value["URL"],
+                                          yyt=value["CardURL"],
+                                          rarity=value["Rarity"],
+                                          )
 
         prices.append(models.Price(card=card,
                                    value=value["Price"],
                                    timestamp=timestamp,
                                    ))
-    return prices, cards
+    return prices
 
 
 def import_prices(data, timestamp, chunk=START):
 
     timestamp = arrow.get(timestamp).datetime
 
-    prices, cards = parse_prices(data, timestamp)
+    prices = parse_prices(data, timestamp)
 
-    for _ in range(len(cards) // START + 1):
-        models.Card.objects.bulk_create(cards[chunk - START:chunk])
-        chunk += START
-
-    for _ in range(len(prices) // START + 1):
-        models.Price.objects.bulk_create(prices[chunk - START:chunk])
-        chunk += START
+    print(len(prices))
+    for price in prices:
+        price.card.save()
+        price.save()
+    # for _ in range(len(prices) // START + 1):
+    #     models.Price.objects.bulk_create(prices[chunk - START:chunk])
+    #     chunk += START
