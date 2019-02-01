@@ -51,9 +51,10 @@ def import_prices(data, timestamp, chunk=START):
     timestamp = arrow.get(timestamp).datetime
     prices = parse_prices(data, timestamp)
 
-    for price in prices:
-        price.card.save()
+    for _ in range(len(prices) // START + 1):
         try:
-            price.save()
+            models.Price.objects.bulk_create(prices[chunk - START:chunk])
         except ValidationError as e:
             logger.warning(e)
+        else:
+            chunk += START
