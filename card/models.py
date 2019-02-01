@@ -12,8 +12,10 @@ class Card(models.Model):
 
 
 class Price(models.Model):
-    card = models.ForeignKey(
-        Card, on_delete=models.CASCADE, unique_for_date="timestamp")
+    class Meta:
+        unique_together = (('card', 'timestamp',),)
+
+    card = models.ForeignKey(Card, on_delete=models.CASCADE)
     value = models.IntegerField()
     timestamp = models.DateTimeField(db_index=True)
 

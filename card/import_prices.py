@@ -1,9 +1,13 @@
+import logging
+
 import arrow
+from django.core.exceptions import ValidationError
 
 from card import models
 
 
 START = 1000
+logger = logging.getLogger(__name__)
 
 
 def parse_prices(data, timestamp):
@@ -18,6 +22,7 @@ def parse_prices(data, timestamp):
             new_data = data[card.card_id]
         except KeyError:
             continue
+
         new_data["to_delete"] = True
         prices.append(models.Price(card=card,
                                    value=new_data["Price"],
@@ -44,13 +49,11 @@ def parse_prices(data, timestamp):
 def import_prices(data, timestamp, chunk=START):
 
     timestamp = arrow.get(timestamp).datetime
-
     prices = parse_prices(data, timestamp)
 
-    print(len(prices))
     for price in prices:
         price.card.save()
-        price.save()
-    # for _ in range(len(prices) // START + 1):
-    #     models.Price.objects.bulk_create(prices[chunk - START:chunk])
-    #     chunk += START
+        try:
+            price.save()
+        except ValidationError as e:
+            logger.warning(e)
