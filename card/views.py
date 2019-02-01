@@ -17,13 +17,13 @@ def home(request):
             "timestamp", flat=True).order_by("timestamp").distinct())[-2:]
 
     try:
-        d1 = arrow.get(dates[0]).isoformat()
-        d2 = arrow.get(dates[1]).isoformat()
+        d1 = arrow.get(dates[0])
+        d2 = arrow.get(dates[1])
     except IndexError:
         return render(request, "home.html", context={})
 
     context = {
-        "cols": models.compare_prices_from_date(d1, d2),
+        "cols": models.compare_prices_from_date(d1.isoformat(), d2.isoformat()),
         "dates": [d1, d2, ],
     }
     r = render(request, "home.html", context=context)

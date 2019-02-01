@@ -34,7 +34,7 @@ def compare_prices_from_date(date1: str, date2: str) -> list:
     second = Price.objects.filter(timestamp=date2)
     second = {price.card_id: price.value for price in second}
 
-    for price in first:
+    for price in first.order_by("card__card_id"):
         try:
             second_price = second[price.card_id]
         except KeyError:
