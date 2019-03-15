@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from django.conf import settings
 
 from card import views
 
@@ -24,3 +26,5 @@ urlpatterns = [
     path('detail/<path:card_id>/', views.detail, name="detail"),
     path('import/', views.import_json, name="import"),
 ]
+if settings.PROFILING:
+    urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]

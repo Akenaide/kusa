@@ -16,9 +16,9 @@
     {% for col, col2 in cols %}
         <tr>
             <td>
-                <a data-img-src="{{col.card.image}}" href={{col.card.yyt}}>{{col.card}}</a>
+                <a data-img-src="{{col.card__image}}" href={{col.card__yyt}}>{{col.card__card_id}}</a>
                 <br />
-                <a href={% url 'detail' col.card.card_id %}>History</a>
+                <a href={% url 'detail' col.card__card_id %}>History</a>
             </td>
             <td>{{col.value}}</td>
             <td>{{col2}}</td>
