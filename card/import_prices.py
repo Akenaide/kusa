@@ -17,7 +17,7 @@ def parse_prices(data, timestamp):
 
     prices = []
 
-    for card in models.Card.objects.all():
+    for card in models.Card.objects.all().only("card_id"):
         try:
             new_data = data[card.card_id]
         except KeyError:
