@@ -10,6 +10,7 @@ from card.import_prices import import_prices
 
 
 def home(request):
+    search = request.GET.get("search")
     if "dates" in request.GET:
         dates = request.GET.get("dates").split(",")
     else:
@@ -23,7 +24,7 @@ def home(request):
         return render(request, "home.html", context={})
 
     context = {
-        "cols": models.compare_prices_from_date(d1.isoformat(), d2.isoformat()),
+        "cols": models.compare_prices_from_date(d1.isoformat(), d2.isoformat(), search=search),
         "dates": [d1, d2, ],
     }
     r = render(request, "home.html", context=context)

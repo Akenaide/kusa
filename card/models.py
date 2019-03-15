@@ -23,7 +23,7 @@ class Price(models.Model):
         return self.card_id
 
 
-def compare_prices_from_date(date1: str, date2: str, search=None) -> list:
+def compare_prices_from_date(date1: str, date2: str, search="") -> list:
     """
     Compare prices from given dates
     """
@@ -31,20 +31,25 @@ def compare_prices_from_date(date1: str, date2: str, search=None) -> list:
     cols = []
 
     first = Price.objects.select_related("card").filter(
-        timestamp=date1).order_by("card__card_id").values(
+        timestamp=date1).order_by("card__card_id")
+    second = Price.objects.filter(timestamp=date2).only(
+        "card_id",
+        "value",
+    )
+    if search:
+        first = first.filter(card__card_id__startswith=search.capitalize())
+        second = second.filter(card__card_id__startswith=search.capitalize())
+
+    second = {price.card_id: price.value for price in second}
+
+    first_data = first.values(
         "card_id",
         "value",
         "card__image",
         "card__yyt",
         "card__card_id",
     )
-    second = Price.objects.filter(timestamp=date2).only(
-        "card_id",
-        "value",
-    )
-    second = {price.card_id: price.value for price in second}
-
-    for price in first:
+    for price in first_data:
         try:
             second_price = second[price["card_id"]]
         except KeyError:
