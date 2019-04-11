@@ -2,4 +2,7 @@
 *.sqlite3
 __pycache__/
 
+# profiling file
+*.prof
+
 .tox
