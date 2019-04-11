@@ -32,7 +32,7 @@ def home(request):
 
 
 def detail(request, card_id):
-    card = models.Card.objects.get(card_id=card_id)
+    card = models.Card.objects.get(card_id__iexact=card_id)
     context = {
         "card": card,
         "prices": card.price_set.all().order_by("timestamp"),

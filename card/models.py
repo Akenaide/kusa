@@ -37,8 +37,8 @@ def compare_prices_from_date(date1: str, date2: str, search="") -> list:
         "value",
     )
     if search:
-        first = first.filter(card__card_id__startswith=search.upper())
-        second = second.filter(card__card_id__startswith=search.upper())
+        first = first.filter(card__card_id__icontains=search.upper())
+        second = second.filter(card__card_id__icontains=search.upper())
 
     second = {price.card_id: price.value for price in second}
 
