@@ -3,6 +3,8 @@ import json
 
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.http import HttpResponseBadRequest
+from django.http import HttpResponse
 import arrow
 
 from card import models
@@ -52,3 +54,27 @@ def import_json(request):
     data = json.loads(response.read().decode('utf-8'))
     import_prices(data, request.POST["date"])
     return redirect("home")
+
+
+def api(request):
+    """
+    basic api
+    """
+    search = request.GET.get("search")
+    if "dates" in request.GET:
+        dates = request.GET.get("dates").split(",")
+    else:
+        dates = list(models.Price.objects.values_list(
+            "timestamp", flat=True).order_by("timestamp").distinct())[-2:]
+
+    try:
+        d1 = arrow.get(dates[0])
+        d2 = arrow.get(dates[1])
+    except IndexError:
+        return HttpResponseBadRequest
+
+    res = models.compare_prices_from_date(d1.isoformat(),
+                                          d2.isoformat(),
+                                          search=search)
+
+    return HttpResponse(json.dumps(res), content_type="application/json")
