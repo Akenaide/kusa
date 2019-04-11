@@ -7,5 +7,13 @@ tr:not(.hide):nth-child(even) {
 
 .grid {
     display: grid;
-    grid-template-columns: 5fr 2fr;
+    grid-template-columns: 5fr 3fr;
+}
+
+#help {
+    white-space: pre-wrap;
+}
+
+#toggleHelp {
+    float: right;
 }

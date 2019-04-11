@@ -6,3 +6,7 @@
         img.setAttribute('src', preview);
     };
 });
+
+document.getElementById('toggleHelp').onclick = function() {
+    document.getElementById('help').classList.toggle('hide');
+}
