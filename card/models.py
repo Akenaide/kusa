@@ -57,6 +57,6 @@ def compare_prices_from_date(date1: str, date2: str, search="") -> list:
             continue
         else:
             if price["value"] != second_price:
-                cols.append([price, second_price, second_price < price["value"]])
+                cols.append([price, second_price, second_price - price["value"]])
 
     return cols

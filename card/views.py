@@ -13,6 +13,7 @@ from card.import_prices import import_prices
 
 def home(request):
     search = request.GET.get("search")
+    msort = request.GET.get("sort")
     if "dates" in request.GET:
         dates = request.GET.get("dates").split(",")
     else:
@@ -25,8 +26,13 @@ def home(request):
     except IndexError:
         return render(request, "home.html", context={})
 
+    cols = models.compare_prices_from_date(d1.isoformat(), d2.isoformat(), search=search)
+
+    if msort == "diff":
+        cols.sort(key=lambda x: x[2])
+
     context = {
-        "cols": models.compare_prices_from_date(d1.isoformat(), d2.isoformat(), search=search),
+        "cols": cols,
         "dates": [d1, d2, ],
     }
     r = render(request, "home.html", context=context)

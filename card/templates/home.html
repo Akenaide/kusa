@@ -12,11 +12,11 @@
         <table id="home">
             <thead>
                 <tr class="header">
-                    <th>ID</th>
+                    <th><a href="?sort=id">ID</a></th>
                     {% for date in dates %}
                     <th> {{date|date}} </th>
                     {% endfor %}
-                    <th>Differrence</th>
+                    <th><a href="?sort=diff">Differrence</a></th>
                     <th>Image</th>
                 </tr>
             </thead>
@@ -30,12 +30,12 @@
                     </td>
                     <td>{{col.value}}</td>
                     <td>{{col2}}</td>
-                    {% if evo %}
+                    {% if evo < 0%}
                         <td class="red">
                     {% else %}
                         <td class="green">
                     {% endif %}
-                    {{col.value|sub:col2}}</td>
+                    {{evo}}</td>
                     <td><img class="preview"/></td>
                 </tr>
                 {% endfor %}
