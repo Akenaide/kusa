@@ -10,6 +10,14 @@ tr:not(.hide):nth-child(even) {
     grid-template-columns: 5fr 3fr;
 }
 
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
 #help {
     white-space: pre-wrap;
 }

@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for col, col2 in cols %}
+                {% for col, col2, evo in cols %}
                 <tr class="row">
                     <td>
                         <a data-img-src="{{col.card__image}}" href={{col.card__yyt}}>{{col.card__card_id}}</a>
@@ -30,7 +30,12 @@
                     </td>
                     <td>{{col.value}}</td>
                     <td>{{col2}}</td>
-                    <td>{{col.value|sub:col2}}</td>
+                    {% if evo %}
+                        <td class="red">
+                    {% else %}
+                        <td class="green">
+                    {% endif %}
+                    {{col.value|sub:col2}}</td>
                     <td><img class="preview"/></td>
                 </tr>
                 {% endfor %}
