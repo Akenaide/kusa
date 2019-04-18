@@ -56,6 +56,28 @@ def import_json(request):
     return redirect("home")
 
 
+def update_images(request):
+    """
+    update images
+    """
+
+    client = http.client.HTTPSConnection("proxymaker.naide.moe")
+    client.request("GET", "/static/yyt_infos.json")
+    response = client.getresponse()
+    data = json.loads(response.read().decode('utf-8'))
+
+    for card in models.Card.objects.filter(
+            image__contains="noimage").only("card_id", "image"):
+        try:
+            card_data = data[card.card_id]
+        except KeyError:
+            continue
+        card.image = card_data["URL"]
+        card.save()
+
+    return redirect("home")
+
+
 def api(request):
     """
     basic api

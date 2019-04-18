@@ -25,6 +25,7 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('detail/<path:card_id>/', views.detail, name="detail"),
     path('import/', views.import_json, name="import"),
+    path('updateimages/', views.update_images, name="updateimages"),
     path('api/cards', views.api, name="api"),
 ]
 if settings.PROFILING:
