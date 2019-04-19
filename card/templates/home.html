@@ -5,10 +5,40 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'card/style.css' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Yuyutei price evolution">
 </head>
 
 <body>
     <div class="grid">
+        <div class="side">
+            <form name="import" class="float-right" action="/import/" method="post">
+                {% csrf_token %}
+                <input type="date" name="date" />
+                <input type="submit" value="submit"/>
+                <a href="#" id="toggleHelp">Help</a>
+            </form>
+            <pre class="float-right hide" id="help">
+    Yahoo,
+
+    here you can see the price (Yen) evolution of any WS card include in yuyutei website.
+    To show images, move your cursor on the card's id in ID column.
+
+    The default view compares two dates.
+    You can choose the range by adding the following text in the url :
+    <code>
+        ?dates=2019-03-10,2019-03-15
+    </code>
+    If you only interested by cards of a particular set, use '?search='.
+    This will show only Konosuba cards :
+    <code>
+        ?search=ks
+    </code>
+    Happy, Lucky, Smile, Yay !!
+
+    <a href="https://github.com/Akenaide/kusa">Github</a>
+            </pre>
+        </div>
         <table id="home">
             <thead>
                 <tr class="header">
@@ -41,34 +71,6 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="side">
-            <form name="import" action="/import/" method="post">
-                {% csrf_token %}
-                <input type="date" name="date" />
-                <input type="submit" value="submit"/>
-                <a href="#" id="toggleHelp">Help</a>
-            </form>
-            <pre class="presentation hide" id="help">
-    Yahoo,
-
-    here you can see the price (Yen) evolution of any WS card include in yuyutei website.
-    To show images, move your cursor on the card's id in ID column.
-
-    The default view compares two dates.
-    You can choose the range by adding the following text in the url :
-    <code>
-        ?dates=2019-03-10,2019-03-15
-    </code>
-    If you only interested by cards of a particular set, use '?search='.
-    This will show only Konosuba cards :
-    <code>
-        ?search=ks
-    </code>
-    Happy, Lucky, Smile, Yay !!
-
-    <a href="https://github.com/Akenaide/kusa">Github</a>
-            </pre>
-        </div>
     </div>
     <script type="text/javascript" src="{% static 'card/main.js' %}"></script>
 </body>

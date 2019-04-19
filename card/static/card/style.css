@@ -1,13 +1,9 @@
 .hide {
     display: none;
 }
+
 tr:not(.hide):nth-child(even) {
     background-color: #f2f2f2;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: 5fr 3fr;
 }
 
 .red {
@@ -18,10 +14,17 @@ tr:not(.hide):nth-child(even) {
     color: green;
 }
 
+.float-right {
+    float: right;
+}
+
 #help {
     white-space: pre-wrap;
 }
 
-#toggleHelp {
-    float: right;
+#home {
+    width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
 }
