@@ -1,17 +1,27 @@
 <!DOCTYPE html>
+<html>
+    <head>
+        <title>Rich Link Preview</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="{{price}}" />
+        <meta property="og:description" content="{{price}}" />
+        <meta property="og:title" content="History {{card}}" />
+        <meta property="og:image" content="{{card.image}}" />
+        <meta property="og:type" content="article" />
+    </head>
 
-{{card}}
+    {{card}}
 
-<table class="table">
-    <tr>
-        <td>Date</td>
-        <td>Value</td>
-    </tr>
-{% for price in prices %}
-    <tr>
-        <td>{{price.timestamp |date}}</td>
-        <td>{{price.value}}</td>
-    </tr>
-
-{% endfor %}
-</table>
+    <table class="table">
+        <tr>
+            <td>Date</td>
+            <td>Value</td>
+        </tr>
+        {% for price in prices %}
+        <tr>
+            <td>{{price.timestamp |date}}</td>
+            <td>{{price.value}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</html>
