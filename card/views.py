@@ -41,7 +41,14 @@ def home(request):
 
 def detail(request, card_id):
     card = models.Card.objects.get(card_id__iexact=card_id)
-    prices = list(card.price_set.all().order_by("timestamp"))
+    prices = []
+    _prices = list(card.price_set.all().order_by("timestamp"))
+    prices.append(_prices[0])
+
+    for p, _ in enumerate(_prices):
+        if not prices[-1].value == _prices[p].value:
+            prices.append(_prices[p])
+
     description = [(v.timestamp.date().isoformat(), v.value)
                    for v in prices[-3:]]
 

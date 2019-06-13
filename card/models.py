@@ -20,7 +20,7 @@ class Price(models.Model):
     timestamp = models.DateTimeField(db_index=True)
 
     def __str__(self):
-        return self.card_id
+        return str(self.value)
 
 
 def compare_prices_from_date(date1: str, date2: str, search="") -> list:
