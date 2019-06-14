@@ -10,8 +10,8 @@
 </head>
 
 <body>
-    <div class="grid">
-        <div class="side">
+    <main>
+        <aside class="side">
             <form name="import" class="float-right" action="/import/" method="post">
                 {% csrf_token %}
                 <input type="date" name="date" />
@@ -38,15 +38,15 @@
 
     <a href="https://github.com/Akenaide/kusa">Github</a>
             </pre>
-        </div>
+        </aside>
         <table id="home">
             <thead>
                 <tr class="header">
-                    <th><a href="?sort=id">ID</a></th>
+                    <th><a id="sort-id" href="?sort=id">ID</a></th>
                     {% for date in dates %}
                     <th> {{date|date}} </th>
                     {% endfor %}
-                    <th><a href="?sort=diff">Differrence</a></th>
+                    <th><a id="sort-diff" href="?sort=diff">Differrence</a></th>
                     <th>Image</th>
                 </tr>
             </thead>
@@ -71,6 +71,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
+    </main>
     <script type="text/javascript" src="{% static 'card/main.js' %}"></script>
 </body>
