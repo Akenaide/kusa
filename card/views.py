@@ -17,8 +17,8 @@ def home(request):
     if "dates" in request.GET:
         dates = request.GET.get("dates").split(",")
     else:
-        dates = list(models.Price.objects.values_list(
-            "timestamp", flat=True).order_by("timestamp").distinct())[-2:]
+        dates = list(models.TimeSP.objects.values_list(
+            "value", flat=True).order_by("value"))[-2:]
 
     try:
         d1 = arrow.get(dates[0])
@@ -49,7 +49,7 @@ def detail(request, card_id):
         if not prices[-1].value == _prices[p].value:
             prices.append(_prices[p])
 
-    description = [(v.timestamp.date().isoformat(), v.value)
+    description = [(v.timestamp.value.date().isoformat(), v.value)
                    for v in prices[-3:]]
 
     context = {

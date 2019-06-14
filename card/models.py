@@ -11,13 +11,20 @@ class Card(models.Model):
         return self.card_id
 
 
+class TimeSP(models.Model):
+    value = models.DateTimeField(db_index=True)
+
+    def __str__(self):
+        return str(self.value)
+
+
 class Price(models.Model):
     class Meta:
         unique_together = (('card', 'timestamp',),)
 
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     value = models.IntegerField()
-    timestamp = models.DateTimeField(db_index=True)
+    timestamp = models.ForeignKey(TimeSP, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.value)
@@ -31,8 +38,8 @@ def compare_prices_from_date(date1: str, date2: str, search="") -> list:
     cols = []
 
     first = Price.objects.select_related("card").filter(
-        timestamp=date1).order_by("card__card_id")
-    second = Price.objects.filter(timestamp=date2).only(
+        timestamp__value=date1).order_by("card__card_id")
+    second = Price.objects.filter(timestamp__value=date2).only(
         "card_id",
         "value",
     )

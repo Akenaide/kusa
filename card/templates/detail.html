@@ -19,7 +19,7 @@
         </tr>
         {% for price in prices %}
         <tr>
-            <td>{{price.timestamp |date}}</td>
+            <td>{{price.timestamp.value |date}}</td>
             <td>{{price.value}}</td>
         </tr>
         {% endfor %}
