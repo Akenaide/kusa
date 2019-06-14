@@ -213,7 +213,7 @@ def test_first_import(MockCard, first_data):
     Test import on empty db
     """
 
-    MockCard.Card.objects.all.return_value = []
+    MockCard.Card.objects.all.return_value.only = lambda x: []
 
     prices = ijson.parse_prices(first_data, "2019-01-05")
 
@@ -228,9 +228,7 @@ def test_import_new_prices_without_new_cards(MockCard, first_data):
     mock_card = MagicMock(spec=Card)
     mock_card._state = MagicMock()
     mock_card.card_id = "AB/W11-001"
-    MockCard.Card.objects.all.return_value = [
-        mock_card,
-    ]
+    MockCard.Card.objects.all.return_value.only = lambda x: [mock_card]
     ijson.parse_prices(first_data, "2019-01-05")
     assert MockCard.Card.objects.create.call_count == 7
 

@@ -37,8 +37,8 @@ def compare_prices_from_date(date1: str, date2: str, search="") -> list:
 
     cols = []
 
-    first = Price.objects.select_related("card").filter(
-        timestamp__value=date1).order_by("card__card_id")
+    first = Price.objects.filter(timestamp__value=date1).select_related(
+        "card").order_by("card__card_id")
     second = Price.objects.filter(timestamp__value=date2).only(
         "card_id",
         "value",
