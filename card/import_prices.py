@@ -49,7 +49,8 @@ def parse_prices(data, timestamp):
 def import_prices(data, timestamp, chunk=START):
 
     timestamp = arrow.get(timestamp).datetime
-    prices = parse_prices(data, timestamp)
+    tsp, _ = models.TimeSP.objects.get_or_create(value=timestamp)
+    prices = parse_prices(data, tsp)
 
     for _ in range(len(prices) // START + 1):
         try:
