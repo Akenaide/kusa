@@ -42,7 +42,7 @@ def home(request):
 def detail(request, card_id):
     card = models.Card.objects.get(card_id__iexact=card_id)
     prices = []
-    _prices = list(card.price_set.all().order_by("timestamp"))
+    _prices = list(card.price_set.all().order_by("timestamp__value"))
     prices.append(_prices[0])
 
     for p, _ in enumerate(_prices):
