@@ -12,6 +12,9 @@ class Card(models.Model):
 
 
 class TimeSP(models.Model):
+    class Meta:
+        ordering = ["value", ]
+
     value = models.DateTimeField(db_index=True)
 
     def __str__(self):

@@ -1,3 +1,4 @@
 django<2.3
 arrow
 pytest-django
+psycopg2-binary
