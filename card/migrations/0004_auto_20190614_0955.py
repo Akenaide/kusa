@@ -24,6 +24,7 @@ def export_timeSP(apps, schema_editor):
     for k, v in times.items():
         Price.objects.filter(timestamp=k).update(_timestamp=v)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -44,6 +45,10 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='card.TimeSP', null=True),
         ),
         migrations.RunPython(export_timeSP),
+        migrations.AlterUniqueTogether(
+            name='price',
+            unique_together={},
+        ),
         migrations.RemoveField(
             model_name='price',
             name='timestamp',
@@ -52,5 +57,9 @@ class Migration(migrations.Migration):
             model_name='price',
             old_name='_timestamp',
             new_name='timestamp',
+        ),
+        migrations.AlterUniqueTogether(
+            name='price',
+            unique_together={('card', 'timestamp')},
         ),
     ]
