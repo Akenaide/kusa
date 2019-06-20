@@ -15,7 +15,7 @@ def home(request):
     search = request.GET.get("search")
     msort = request.GET.get("sort")
     if "dates" in request.GET:
-        dates = request.GET.get("dates").split(",")
+        dates = request.GET.getlist("dates")
     else:
         dates = list(models.TimeSP.objects.values_list(
             "value", flat=True).order_by("value"))[-2:]
@@ -34,6 +34,7 @@ def home(request):
     context = {
         "cols": cols,
         "dates": [d1, d2, ],
+        "available_date": models.TimeSP.objects.all().values_list("value", flat=True),
     }
     r = render(request, "home.html", context=context)
     return r

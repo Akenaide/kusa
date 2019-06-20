@@ -1,6 +1,8 @@
 .python-version
 *.sqlite3
 __pycache__/
+node_modules
+package*.json
 
 # profiling file
 *.prof

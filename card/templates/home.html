@@ -12,12 +12,12 @@
 <body>
     <main>
         <aside class="side">
-            <form name="import" class="float-right" action="/import/" method="post">
+            <form name="import" class="float-right hide" action="/import/" method="post">
                 {% csrf_token %}
                 <input type="date" name="date" />
                 <input type="submit" value="submit"/>
-                <a href="#" id="toggleHelp">Help</a>
             </form>
+            <a href="#" class="float-right" id="toggleHelp">Help</a>
             <pre class="float-right hide" id="help">
     Yahoo,
 
@@ -27,7 +27,7 @@
     The default view compares two dates.
     You can choose the range by adding the following text in the url :
     <code>
-        ?dates=2019-03-10,2019-03-15
+        ?dates=2019-03-10&dates2019-03-15
     </code>
     If you only interested by cards of a particular set, use '?search='.
     This will show only Konosuba cards :
@@ -39,12 +39,28 @@
     <a href="https://github.com/Akenaide/kusa">Github</a>
             </pre>
         </aside>
+        <section>
+            <form action="/">
+            From: <select name="dates">
+                {% for adate in available_date %}
+                    <option value="{{adate|date:'Y-m-d'}}">{{adate|date:"DATE_FORMAT"}}</option>
+                {% endfor %}
+            </select>
+            To: <select name="dates">
+                {% for adate in available_date %}
+                    <option value="{{adate|date:'Y-m-d'}}">{{adate|date:"DATE_FORMAT"}}</option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" value="Go" method="GET" >
+            </form>
+        </section>
         <table id="home">
             <thead>
                 <tr class="header">
                     <th><a id="sort-id" href="?sort=id">ID</a></th>
                     {% for date in dates %}
-                    <th> {{date|date}} </th>
+                    <th>{{date|date}}</th>
                     {% endfor %}
                     <th><a id="sort-diff" href="?sort=diff">Differrence</a></th>
                     <th>Image</th>
