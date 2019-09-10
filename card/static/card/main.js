@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const sortDiff = new URLSearchParams(
       document.getElementById('sort-diff').getAttribute('href'));
   for (const p of url.searchParams) {
-    sortID.set(p[0], p[1]);
-    sortDiff.set(p[0], p[1]);
+    sortID.append(p[0], p[1]);
+    sortDiff.append(p[0], p[1]);
   }
   sortID.set('sort', 'id');
   sortDiff.set('sort', 'diff');
